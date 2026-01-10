@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCartStore } from "@/store/cartStore";
 import { Trash2, Plus, Minus, ArrowRight, ShoppingCart } from "lucide-react";
-import { getValidImage } from "@/lib/utils";
+import { getValidImage, formatPrice } from "@/lib/utils";
 
 export default function CartPage() {
     const { items, removeItem, updateQuantity } = useCartStore();
@@ -14,7 +14,7 @@ export default function CartPage() {
         0
     );
 
-    const shipping = subtotal > 100 ? 0 : 15;
+    const shipping = subtotal > 500 ? 0 : 40;
     const total = subtotal + shipping;
 
     if (items.length === 0) {
@@ -23,7 +23,7 @@ export default function CartPage() {
                 <div className="w-24 h-24 bg-secondary rounded-full flex items-center justify-center mx-auto mb-8">
                     <ShoppingCart className="w-10 h-10 text-muted-foreground" />
                 </div>
-                <h1 className="text-3xl font-bold mb-4 uppercase tracking-tighter italic">Your cart is empty</h1>
+                <h1 className="text-3xl font-bold mb-4 uppercase tracking-tighter italic">Your Bag is empty</h1>
                 <p className="text-muted-foreground mb-8 max-w-md mx-auto font-medium">
                     Looks like you haven't added anything to your cart yet.
                     Start exploring our collection and find something you love.
@@ -41,7 +41,7 @@ export default function CartPage() {
 
     return (
         <div className="container mx-auto px-4 py-12">
-            <h1 className="text-4xl font-black mb-12 tracking-tighter uppercase italic">Shopping Cart</h1>
+            <h1 className="text-4xl font-black mb-12 tracking-tighter uppercase italic">My Shopping Bag</h1>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                 {/* Cart Items */}
@@ -59,7 +59,7 @@ export default function CartPage() {
                                 <div className="flex justify-between items-start">
                                     <div>
                                         <h3 className="text-lg font-black uppercase tracking-tight text-foreground">{item.title}</h3>
-                                        <p className="text-sm text-muted-foreground mt-1 font-medium">Free Delivery</p>
+                                        <p className="text-sm text-muted-foreground mt-1 font-medium">Express Delivery</p>
                                     </div>
                                     <button
                                         onClick={() => removeItem(item.id)}
@@ -85,7 +85,7 @@ export default function CartPage() {
                                             <Plus className="w-3 h-3" />
                                         </button>
                                     </div>
-                                    <p className="text-xl font-black text-foreground">${(item.price * item.quantity).toFixed(2)}</p>
+                                    <p className="text-xl font-black text-foreground">{formatPrice(item.price * item.quantity)}</p>
                                 </div>
                             </div>
                         </div>
@@ -95,32 +95,32 @@ export default function CartPage() {
                 {/* Order Summary */}
                 <div className="lg:col-span-1">
                     <div className="bg-secondary border border-border rounded-3xl p-8 sticky top-24 transition-colors">
-                        <h2 className="text-2xl font-black mb-8 italic uppercase tracking-tighter">Summary</h2>
+                        <h2 className="text-2xl font-black mb-8 italic uppercase tracking-tighter">Order Summary</h2>
 
                         <div className="space-y-4 mb-8">
                             <div className="flex justify-between text-muted-foreground font-medium">
                                 <span>Subtotal</span>
-                                <span className="font-bold text-foreground">${subtotal.toFixed(2)}</span>
+                                <span className="font-bold text-foreground">{formatPrice(subtotal)}</span>
                             </div>
                             <div className="flex justify-between text-muted-foreground font-medium">
-                                <span>Shipping</span>
+                                <span>Delivery Fee</span>
                                 <span className="font-bold text-foreground">
-                                    {shipping === 0 ? "FREE" : `$${shipping.toFixed(2)}`}
+                                    {shipping === 0 ? "FREE" : formatPrice(shipping)}
                                 </span>
                             </div>
                             {shipping > 0 && (
                                 <p className="text-[10px] text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">
-                                    Spend ${(100 - subtotal).toFixed(2)} more for FREE shipping
+                                    Add {formatPrice(500 - subtotal)} more for FREE delivery
                                 </p>
                             )}
                         </div>
 
                         <div className="pt-8 border-t border-border mb-8">
                             <div className="flex justify-between items-end">
-                                <span className="text-lg font-black uppercase tracking-tight">Total</span>
+                                <span className="text-lg font-black uppercase tracking-tight">Total Amount</span>
                                 <div className="text-right">
-                                    <p className="text-[10px] text-muted-foreground underline uppercase tracking-widest decoration-blue-500 font-bold">Includes taxes</p>
-                                    <p className="text-3xl font-black tracking-tighter text-foreground">${total.toFixed(2)}</p>
+                                    <p className="text-[10px] text-muted-foreground underline uppercase tracking-widest decoration-blue-500 font-bold">Inclusive of taxes</p>
+                                    <p className="text-3xl font-black tracking-tighter text-foreground">{formatPrice(total)}</p>
                                 </div>
                             </div>
                         </div>
@@ -129,14 +129,12 @@ export default function CartPage() {
                             href="/checkout"
                             className="w-full py-4 bg-foreground text-background rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:opacity-90 transition-all shadow-xl shadow-black/5 group"
                         >
-                            Checkout
+                            Checkout Now
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </Link>
 
-                        <div className="mt-8 flex items-center justify-center gap-4 grayscale opacity-50 dark:invert">
-                            <Image src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" width={40} height={20} />
-                            <Image src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" width={30} height={20} />
-                            <Image src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" width={50} height={20} />
+                        <div className="mt-8 flex flex-wrap items-center justify-center gap-4 grayscale opacity-50 dark:invert">
+                            <span className="text-[10px] font-black uppercase tracking-widest">Verified Payments</span>
                         </div>
                     </div>
                 </div>
@@ -144,3 +142,4 @@ export default function CartPage() {
         </div>
     );
 }
+

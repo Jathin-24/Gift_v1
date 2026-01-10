@@ -15,3 +15,10 @@ export const getValidImage = (url?: string) => {
     if (url && isValidUrl(url)) return url;
     return FALLBACK_IMAGE;
 };
+export const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        maximumFractionDigits: 0,
+    }).format(price);
+};

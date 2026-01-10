@@ -88,18 +88,18 @@ export default function Header() {
                     {session ? (
                         <>
                             {session.user.role === "admin" && (
-                                <Link href="/admin" className="text-xs font-black uppercase tracking-[0.2em] py-4 border-b border-border/50 text-blue-600" onClick={() => setIsMenuOpen(false)}>Admin Command</Link>
+                                <Link href="/admin" className="text-xs font-black uppercase tracking-[0.2em] py-4 border-b border-border/50 text-blue-600" onClick={() => setIsMenuOpen(false)}>Admin Panel</Link>
                             )}
-                            <Link href="/profile" className="text-xs font-black uppercase tracking-[0.2em] py-4 border-b border-border/50" onClick={() => setIsMenuOpen(false)}>Profile Registry</Link>
+                            <Link href="/profile" className="text-xs font-black uppercase tracking-[0.2em] py-4 border-b border-border/50" onClick={() => setIsMenuOpen(false)}>My Profile</Link>
                             <button
                                 onClick={() => signOut()}
                                 className="text-xs font-black uppercase tracking-[0.2em] py-4 text-red-600 text-left"
                             >
-                                Secure Logout
+                                Sign Out
                             </button>
                         </>
                     ) : (
-                        <Link href="/login" className="text-xs font-black uppercase tracking-[0.2em] py-4 border-b border-border/50" onClick={() => setIsMenuOpen(false)}>Member Access</Link>
+                        <Link href="/login" className="text-xs font-black uppercase tracking-[0.2em] py-4 border-b border-border/50" onClick={() => setIsMenuOpen(false)}>Sign In</Link>
                     )}
                 </div>
             )}

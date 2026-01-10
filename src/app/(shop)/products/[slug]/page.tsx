@@ -4,7 +4,7 @@ import dbConnect from "@/lib/db/mongodb";
 import Product from "@/lib/db/models/Product";
 import AddToCartButton from "@/components/products/AddToCartButton";
 import WishlistButton from "@/components/products/WishlistButton";
-import { getValidImage } from "@/lib/utils";
+import { getValidImage, formatPrice } from "@/lib/utils";
 
 export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
     await dbConnect();
@@ -43,7 +43,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
                         <div className="flex justify-between items-start mb-4">
                             <div>
                                 <h1 className="text-5xl font-black mb-2 tracking-tighter uppercase italic text-foreground">{product.title}</h1>
-                                <p className="text-3xl font-black text-blue-600 tracking-tight">${product.price.toFixed(2)}</p>
+                                <p className="text-3xl font-black text-blue-600 tracking-tight">{formatPrice(product.price)}</p>
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
                                 </div>
                                 <div>
                                     <p className="text-sm font-black uppercase tracking-tight">Free Shipping</p>
-                                    <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Orders over $100</p>
+                                    <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Orders over ₹500</p>
                                 </div>
                             </div>
                             <div className="p-5 bg-secondary border border-border rounded-3xl flex items-center gap-4 group hover:border-blue-500/50 transition-all">
@@ -83,7 +83,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
                                 </div>
                                 <div>
                                     <p className="text-sm font-black uppercase tracking-tight">Secure Payment</p>
-                                    <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">100% Encrypted</p>
+                                    <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Verified in India</p>
                                 </div>
                             </div>
                         </div>
@@ -93,3 +93,4 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
         </div>
     );
 }
+
