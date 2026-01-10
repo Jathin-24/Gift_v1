@@ -1,4 +1,4 @@
-import { Package, ShoppingCart, Users, DollarSign, Clock, ArrowUpRight } from "lucide-react";
+import { Package, ShoppingCart, Users, DollarSign, Clock, ArrowUpRight, IndianRupee } from "lucide-react";
 import dbConnect from "@/lib/db/mongodb";
 import Product from "@/lib/db/models/Product";
 import Order from "@/lib/db/models/Order";
@@ -28,7 +28,7 @@ export default async function AdminDashboard() {
         .limit(5);
 
     const stats = [
-        { label: "Total Revenue", value: `$${totalRevenue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, icon: DollarSign, color: "text-green-600", bg: "bg-green-100" },
+        { label: "Total Revenue", value: `₹${totalRevenue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, icon: IndianRupee, color: "text-green-600", bg: "bg-green-100" },
         { label: "Total Orders", value: orderCount.toString(), icon: ShoppingCart, color: "text-blue-600", bg: "bg-blue-100" },
         { label: "Active Products", value: productCount.toString(), icon: Package, color: "text-purple-600", bg: "bg-purple-100" },
         { label: "Customers", value: userCount.toString(), icon: Users, color: "text-orange-600", bg: "bg-orange-100" },

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Loader2, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
+import ImageUpload from "@/components/ui/ImageUpload";
 
 export default function NewProduct() {
     const router = useRouter();
@@ -177,24 +178,14 @@ export default function NewProduct() {
                 </div>
 
                 <div className="space-y-4">
-                    <label className="text-xs font-black uppercase tracking-widest text-muted-foreground block">Product Images (URLs)</label>
+                    <label className="text-xs font-black uppercase tracking-widest text-muted-foreground block">Product Images</label>
                     {formData.images.map((url, index) => (
-                        <div key={index} className="flex gap-2">
-                            <input
-                                type="text"
+                        <div key={index}>
+                            <ImageUpload
                                 value={url}
-                                onChange={(e) => handleImageChange(index, e.target.value)}
-                                required
-                                className="flex-grow px-5 py-4 rounded-2xl bg-secondary border border-border focus:ring-2 focus:ring-blue-600 outline-none transition-all"
-                                placeholder="https://images.unsplash.com/..."
+                                onChange={(value) => handleImageChange(index, value)}
+                                onRemove={() => removeImageField(index)}
                             />
-                            <button
-                                type="button"
-                                onClick={() => removeImageField(index)}
-                                className="p-4 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-2xl transition-all"
-                            >
-                                <Trash2 className="w-5 h-5" />
-                            </button>
                         </div>
                     ))}
                     <button

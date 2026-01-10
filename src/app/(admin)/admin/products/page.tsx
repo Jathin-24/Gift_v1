@@ -62,7 +62,7 @@ export default async function AdminProducts() {
                                         </div>
                                     </td>
                                     <td className="px-8 py-6">
-                                        <span className="font-black text-base text-foreground">${product.price.toFixed(2)}</span>
+                                        <span className="font-black text-base text-foreground">₹{product.price.toFixed(2)}</span>
                                     </td>
                                     <td className="px-8 py-6">
                                         <div className="flex flex-col gap-1">

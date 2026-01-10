@@ -3,7 +3,7 @@ export const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1560393464-5c69
 export const isValidUrl = (url: string) => {
     try {
         if (!url) return false;
-        if (url.startsWith('/')) return true;
+        if (url.startsWith('/') || url.startsWith('data:')) return true;
         new URL(url);
         return true;
     } catch {

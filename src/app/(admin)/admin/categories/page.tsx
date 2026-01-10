@@ -1,8 +1,8 @@
 "use client";
-
 import { useState, useEffect } from "react";
-import { Plus, Tags, Trash2, Edit2, Loader2, X, Image as ImageIcon } from "lucide-react";
+import { Plus, Tags, Trash2, Edit2, Loader2, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import ImageUpload from "@/components/ui/ImageUpload";
 
 interface Category {
     _id: string;
@@ -223,21 +223,11 @@ export default function AdminCategories() {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Asset Image URL</label>
-                                <div className="flex gap-4">
-                                    <div className="flex-grow">
-                                        <input
-                                            name="image"
-                                            value={formData.image}
-                                            onChange={handleInputChange}
-                                            className="w-full px-6 py-4 rounded-2xl bg-secondary border border-border focus:ring-2 focus:ring-blue-600 outline-none font-bold transition-all"
-                                            placeholder="https://images.unsplash.com/..."
-                                        />
-                                    </div>
-                                    <div className="w-14 h-14 bg-secondary rounded-2xl flex items-center justify-center border border-border overflow-hidden">
-                                        {formData.image ? <img src={formData.image} className="w-full h-full object-cover" /> : <ImageIcon className="w-5 h-5 text-muted-foreground" />}
-                                    </div>
-                                </div>
+                                <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Asset Image</label>
+                                <ImageUpload
+                                    value={formData.image}
+                                    onChange={(url) => setFormData(prev => ({ ...prev, image: url }))}
+                                />
                             </div>
 
                             <div className="space-y-2">
