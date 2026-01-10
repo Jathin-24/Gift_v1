@@ -140,9 +140,18 @@ export default function CheckoutPage() {
         }
     };
 
+    useEffect(() => {
+        if (items.length === 0) {
+            router.push("/cart");
+        }
+    }, [items, router]);
+
     if (items.length === 0) {
-        router.push("/cart");
-        return null;
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <Loader2 className="w-10 h-10 animate-spin text-blue-500" />
+            </div>
+        );
     }
 
     return (
