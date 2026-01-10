@@ -19,7 +19,7 @@ export default async function ProductsPage({
     const categories = await Category.find({}).sort({ title: 1 });
 
     let query = {};
-    let categoryTitle = "Inventory Collection";
+    let categoryTitle = "Product Collection";
 
     if (searchParams.category && searchParams.category !== "all") {
         const categoryDoc = await Category.findOne({ slug: searchParams.category });
@@ -45,7 +45,7 @@ export default async function ProductsPage({
                         {categoryTitle}
                     </h1>
                     <p className="text-muted-foreground mt-4 font-bold uppercase text-[10px] tracking-[0.2em]">
-                        Curated High-Performance Modules
+                        Curated High-Quality Products
                     </p>
                 </div>
 
@@ -93,13 +93,13 @@ export default async function ProductsPage({
             {products.length === 0 && (
                 <div className="text-center py-32 bg-secondary/50 rounded-[3.5rem] border-2 border-dashed border-border">
                     <p className="text-muted-foreground mb-6 font-black uppercase tracking-[0.3em] text-xs underline decoration-red-500/30 underline-offset-8">
-                        No Modules Registered in this Matrix
+                        No Products Found in this Category
                     </p>
                     <Link
                         href="/products"
                         className="px-10 py-4 bg-foreground text-background font-black uppercase tracking-widest text-[10px] rounded-full hover:opacity-90 transition-all shadow-xl"
                     >
-                        Reset All Matrix Filters
+                        View All Products
                     </Link>
                 </div>
             )}

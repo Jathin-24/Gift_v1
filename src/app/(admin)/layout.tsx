@@ -20,7 +20,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         <div className="min-h-screen flex items-center justify-center bg-background">
             <div className="flex flex-col items-center gap-4">
                 <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-                <p className="font-black uppercase tracking-widest text-[10px]">Verifying Authority...</p>
+                <p className="font-black uppercase tracking-widest text-[10px]">Loading Admin...</p>
             </div>
         </div>
     );
@@ -45,7 +45,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                     </Link>
                     <Link href="/admin/products" className="flex items-center gap-3 px-5 py-3.5 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-2xl font-black uppercase tracking-tighter text-xs transition-all">
                         <Package className="w-4 h-4" />
-                        Inventory
+                        Products
                     </Link>
                     <Link href="/admin/categories" className="flex items-center gap-3 px-5 py-3.5 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-2xl font-black uppercase tracking-tighter text-xs transition-all">
                         <Tags className="w-4 h-4" />

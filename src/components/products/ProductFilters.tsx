@@ -35,19 +35,19 @@ export default function ProductFilters({ categories }: { categories: any[] }) {
                 <button
                     onClick={() => router.push("/products?" + createQueryString("category", "all"))}
                     className={`px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all ${activeCategory === "all"
-                            ? "bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/20"
-                            : "bg-secondary text-muted-foreground border-border hover:border-blue-600"
+                        ? "bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/20"
+                        : "bg-secondary text-muted-foreground border-border hover:border-blue-600"
                         }`}
                 >
-                    All Modules
+                    All Products
                 </button>
                 {categories.map((cat) => (
                     <button
                         key={cat._id}
                         onClick={() => router.push("/products?" + createQueryString("category", cat.slug))}
                         className={`px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all ${activeCategory === cat.slug
-                                ? "bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/20"
-                                : "bg-secondary text-muted-foreground border-border hover:border-blue-600"
+                            ? "bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/20"
+                            : "bg-secondary text-muted-foreground border-border hover:border-blue-600"
                             }`}
                     >
                         {cat.title}
