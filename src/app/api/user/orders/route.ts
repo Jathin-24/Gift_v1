@@ -3,6 +3,7 @@ import dbConnect from "@/lib/db/mongodb";
 import Order from "@/lib/db/models/Order";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
+import { sendOrderEmail } from "@/lib/email";
 
 export async function GET() {
     try {
@@ -52,6 +53,14 @@ export async function POST(req: Request) {
         });
 
         console.log("Order successfully persisted to MongoDB:", newOrder._id);
+
+        // Send Email Notification
+        try {
+            await sendOrderEmail(newOrder, session.user);
+        } catch (emailError) {
+            console.error("Failed to send email notification:", emailError);
+            // Don't fail the request if email fails
+        }
 
         return NextResponse.json(newOrder, { status: 201 });
     } catch (error: any) {

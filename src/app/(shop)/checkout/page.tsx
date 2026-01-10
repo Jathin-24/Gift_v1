@@ -7,6 +7,8 @@ import { useCartStore } from "@/store/cartStore";
 import { formatPrice } from "@/lib/utils";
 import { Lock, Truck, ShieldCheck, ArrowRight, Loader2, MapPin, Phone } from "lucide-react";
 
+import Script from "next/script";
+
 export default function CheckoutPage() {
     const { data: session, update } = useSession();
     const router = useRouter();
@@ -99,42 +101,82 @@ export default function CheckoutPage() {
                 body: JSON.stringify(formData),
             });
 
-            if (!profileRes.ok) {
-                throw new Error("Failed to save profile details");
-            }
+            if (!profileRes.ok) throw new Error("Failed to save profile details");
 
             // Update session name if changed
             await update({ name: formData.name });
 
-            // 2. Create Order in DB
-            const orderRes = await fetch("/api/user/orders", {
+            // 2. Initialize Razorpay Order
+            const orderRes = await fetch("/api/payment/razorpay", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    items,
-                    total,
-                    shippingAddress: {
-                        line1: formData.address.line1,
-                        city: formData.address.city,
-                        state: formData.address.state,
-                        postalCode: formData.address.postalCode,
-                        country: formData.address.country,
-                        phone: formData.phone
-                    },
-                }),
+                body: JSON.stringify({ amount: total }),
             });
 
-            if (!orderRes.ok) {
-                throw new Error("Failed to place order");
-            }
+            if (!orderRes.ok) throw new Error("Failed to initialize payment");
 
-            // 3. Finalize
-            setTimeout(() => {
-                clearCart();
-                router.push("/order-confirmation");
-            }, 1500);
+            const orderData = await orderRes.json();
+
+            // 3. Open Razorpay
+            const options = {
+                key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+                amount: orderData.amount,
+                currency: "INR",
+                name: "Store System",
+                description: "Order Transaction",
+                order_id: orderData.id,
+                handler: async function (response: any) {
+                    try {
+                        // 4. Create Order in DB on Success
+                        const saveOrderRes = await fetch("/api/user/orders", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                items,
+                                total,
+                                shippingAddress: {
+                                    name: formData.name, // Explicitly passing name from formData
+                                    email: formData.email,
+                                    phone: formData.phone,
+                                    address: formData.address.line1,
+                                    city: formData.address.city,
+                                    state: formData.address.state,
+                                    postalCode: formData.address.postalCode,
+                                    country: formData.address.country,
+                                },
+                                paymentInfo: {
+                                    razorpayOrderId: response.razorpay_order_id,
+                                    razorpayPaymentId: response.razorpay_payment_id,
+                                    razorpaySignature: response.razorpay_signature,
+                                },
+                            }),
+                        });
+
+                        if (!saveOrderRes.ok) throw new Error("Failed to save order");
+
+                        clearCart();
+                        router.push("/order-confirmation");
+                    } catch (err) {
+                        console.error(err);
+                        alert("Payment successful but order saving failed. Please contact support.");
+                    }
+                },
+                prefill: {
+                    name: formData.name,
+                    email: formData.email,
+                    contact: formData.phone,
+                },
+                theme: {
+                    color: "#2563eb",
+                },
+            };
+
+            const paymentObject = new (window as any).Razorpay(options);
+            paymentObject.open();
+            setLoading(false);
 
         } catch (error: any) {
+            console.error(error);
             alert(error.message || "Transaction failed. Please try again.");
             setLoading(false);
         }
@@ -156,6 +198,7 @@ export default function CheckoutPage() {
 
     return (
         <div className="container mx-auto px-4 py-12">
+            <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
             <div className="flex flex-col lg:flex-row gap-12">
                 {/* Checkout Form */}
                 <div className="lg:w-2/3">
@@ -246,7 +289,7 @@ export default function CheckoutPage() {
                                 </div>
                             </div>
 
-                            <div className="pt-6">
+                            <div className="pt-6 space-y-4">
                                 <button
                                     type="submit"
                                     disabled={loading}
@@ -259,11 +302,58 @@ export default function CheckoutPage() {
                                         </>
                                     ) : (
                                         <>
-                                            Confirm Order ({formatPrice(total)})
+                                            Pay & Confirm Order
                                             <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                                         </>
                                     )}
                                 </button>
+
+                                <button
+                                    type="button"
+                                    onClick={async () => {
+                                        // Mimic Success
+                                        if (formData.phone.length < 10) return alert("Enter valid phone");
+                                        if (formData.address.postalCode.length !== 6) return alert("Enter valid PIN");
+
+                                        setLoading(true);
+                                        try {
+                                            const saveOrderRes = await fetch("/api/user/orders", {
+                                                method: "POST",
+                                                headers: { "Content-Type": "application/json" },
+                                                body: JSON.stringify({
+                                                    items,
+                                                    total,
+                                                    shippingAddress: {
+                                                        name: formData.name,
+                                                        email: formData.email,
+                                                        phone: formData.phone,
+                                                        address: formData.address.line1,
+                                                        city: formData.address.city,
+                                                        state: formData.address.state,
+                                                        postalCode: formData.address.postalCode,
+                                                        country: formData.address.country,
+                                                    },
+                                                    paymentInfo: {
+                                                        razorpayOrderId: "test_order_" + Date.now(),
+                                                        razorpayPaymentId: "test_pay_" + Date.now(),
+                                                        razorpaySignature: "test_sig",
+                                                    },
+                                                }),
+                                            });
+                                            const errorData = await saveOrderRes.json();
+                                            if (!saveOrderRes.ok) throw new Error(errorData.message || "Processing failed");
+                                            clearCart();
+                                            router.push("/order-confirmation");
+                                        } catch (e: any) {
+                                            alert("Test failed: " + e.message);
+                                            setLoading(false);
+                                        }
+                                    }}
+                                    className="w-full py-4 bg-secondary text-muted-foreground hover:text-foreground rounded-[2rem] font-black uppercase tracking-widest text-[10px] hover:bg-border transition-all"
+                                >
+                                    Test Payment (No Gateway)
+                                </button>
+
                                 <div className="flex items-center justify-center gap-3 mt-6 text-muted-foreground italic font-bold text-xs uppercase tracking-tight">
                                     <Lock className="w-4 h-4" />
                                     <span>Secure SSL Checkout Enabled</span>

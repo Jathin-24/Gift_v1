@@ -84,11 +84,11 @@ export default async function AdminDashboard() {
                                         <td className="py-5">
                                             <p className="font-black uppercase tracking-tight text-foreground">{order.shippingAddress.name}</p>
                                         </td>
-                                        <td className="py-5 font-black italic">${order.total.toFixed(2)}</td>
+                                        <td className="py-5 font-black italic">₹{order.total.toFixed(2)}</td>
                                         <td className="py-5 text-right">
                                             <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${order.status === 'delivered' ? 'bg-green-50 text-green-600 border-green-100' :
-                                                    order.status === 'processing' ? 'bg-blue-50 text-blue-600 border-blue-100' :
-                                                        'bg-secondary text-muted-foreground border-border'
+                                                order.status === 'processing' ? 'bg-blue-50 text-blue-600 border-blue-100' :
+                                                    'bg-secondary text-muted-foreground border-border'
                                                 }`}>
                                                 {order.status}
                                             </span>
