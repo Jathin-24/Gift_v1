@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     description: "A premium e-commerce application built with Next.js",
 };
 
+import AdminGuard from "@/components/layout/AdminGuard";
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -24,7 +26,9 @@ export default function RootLayout({
                     <AuthProvider>
                         <Header />
                         <main className="min-h-[calc(100vh-64px)]">
-                            {children}
+                            <AdminGuard>
+                                {children}
+                            </AdminGuard>
                         </main>
                     </AuthProvider>
                 </ThemeProvider>

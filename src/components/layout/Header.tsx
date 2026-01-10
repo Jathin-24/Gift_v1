@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { ShoppingCart, User, LogOut, Menu, X, LayoutDashboard } from "lucide-react";
+import { ShoppingCart, User, LogOut, Menu, X, LayoutDashboard, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { useCartStore } from "@/store/cartStore";
+import { useAdminStore } from "@/store/useAdminStore";
 import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
     const { data: session } = useSession();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { isAdminMode, toggleAdminMode } = useAdminStore();
     const items = useCartStore((state) => state.items);
     const itemCount = items.reduce((total, item) => total + item.quantity, 0);
 
@@ -20,20 +22,40 @@ export default function Header() {
                     <Link href="/" className="text-2xl font-black italic tracking-tighter uppercase group">
                         Store<span className="text-blue-600 group-hover:animate-pulse">.</span>
                     </Link>
-                    <nav className="hidden md:flex items-center gap-8">
-                        <Link href="/products" className="text-[11px] font-black uppercase tracking-widest hover:text-blue-600 transition-colors">
-                            Products
-                        </Link>
-                        <Link href="/categories" className="text-[11px] font-black uppercase tracking-widest hover:text-blue-600 transition-colors">
-                            Collections
-                        </Link>
-                    </nav>
+
                 </div>
 
                 <div className="flex items-center gap-3 md:gap-6">
                     <ThemeToggle />
 
-                    {session && (
+                    {session?.user.role === "admin" && (
+                        <button
+                            onClick={toggleAdminMode}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all border-2 group ${isAdminMode
+                                    ? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/30'
+                                    : 'bg-blue-50 text-blue-600 border-blue-200 hover:border-blue-400 hover:bg-blue-100'
+                                }`}
+                            title={isAdminMode ? "Exit Admin Focus" : "Enter Admin Focus"}
+                        >
+                            <ShieldCheck className={`w-4 h-4 transition-transform ${isAdminMode ? 'fill-current' : ''}`} />
+                            <span className="text-[10px] font-black uppercase tracking-widest hidden md:inline-block">
+                                {isAdminMode ? 'Admin Active' : 'Enable Admin'}
+                            </span>
+                        </button>
+                    )}
+
+                    {!isAdminMode && (
+                        <nav className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+                            <Link href="/products" className="text-[11px] font-black uppercase tracking-widest hover:text-blue-600 transition-colors">
+                                Products
+                            </Link>
+                            <Link href="/categories" className="text-[11px] font-black uppercase tracking-widest hover:text-blue-600 transition-colors">
+                                Collections
+                            </Link>
+                        </nav>
+                    )}
+
+                    {(!isAdminMode && session) && (
                         <Link href="/cart" className="relative p-3 hover:bg-secondary rounded-2xl transition-all border border-transparent hover:border-border group">
                             <ShoppingCart className="w-5 h-5 group-hover:scale-110 transition-transform" />
                             {itemCount > 0 && (
@@ -51,9 +73,11 @@ export default function Header() {
                                     <LayoutDashboard className="w-5 h-5 group-hover:scale-110 transition-transform" />
                                 </Link>
                             )}
-                            <Link href="/profile" className="p-3 hover:bg-secondary rounded-2xl transition-all border border-transparent hover:border-border group" title="My Profile">
-                                <User className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                            </Link>
+                            {!isAdminMode && (
+                                <Link href="/profile" className="p-3 hover:bg-secondary rounded-2xl transition-all border border-transparent hover:border-border group" title="My Profile">
+                                    <User className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                                </Link>
+                            )}
                             <button
                                 onClick={() => signOut()}
                                 className="hidden md:block p-3 hover:bg-red-500 hover:text-white rounded-2xl transition-all border border-transparent hover:border-red-500/20 group"
