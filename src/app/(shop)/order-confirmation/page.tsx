@@ -23,14 +23,14 @@ export default function OrderConfirmationPage() {
                 </Link>
                 <Link
                     href="/products"
-                    className="px-10 py-5 bg-secondary text-foreground border border-border rounded-2xl font-black uppercase tracking-widest flex items-center gap-3 hover:bg-border transition-all group active:scale-95"
+                    className="px-10 py-5 bg-secondary text-foreground border border-border rounded-2xl font-black uppercase tracking-widest flex items-center gap-3 hover:bg-border transition-all group active:scale-95 dark:bg-zinc-800 dark:text-white"
                 >
                     Browse Collections
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
             </div>
 
-            <div className="mt-24 p-12 bg-card rounded-[40px] max-w-4xl mx-auto border border-border shadow-sm">
+            <div className="mt-24 p-12 bg-card rounded-[40px] max-w-4xl mx-auto border border-border shadow-2xl shadow-blue-600/20 dark:bg-zinc-900">
                 <h3 className="text-2xl font-black mb-10 uppercase italic tracking-tighter flex items-center justify-center gap-3">
                     <PackageSearch className="w-6 h-6 text-blue-500" />
                     Order Status

@@ -39,10 +39,12 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-[calc(100vh-80px)] flex flex-col items-center justify-center p-6 bg-background">
-            <div className="w-full max-w-[400px] space-y-8">
+        <div className="min-h-[calc(100vh-80px)] flex flex-col items-center justify-center p-6 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-50 via-background to-background dark:from-blue-950/20 dark:via-background dark:to-background">
+            <div className="w-full max-w-[450px] space-y-8 bg-card border-4 border-zinc-200 dark:border-zinc-700 p-10 rounded-[3rem] shadow-2xl shadow-blue-600/30 hover:shadow-blue-600/40 transition-shadow duration-500">
                 <div className="text-center space-y-2">
-                    <h1 className="text-3xl font-black tracking-tight uppercase">Login</h1>
+                    <h1 className="text-5xl font-black italic tracking-tighter uppercase text-foreground mb-4">
+                        Login<span className="text-blue-600">.</span>
+                    </h1>
                     <p className="text-muted-foreground text-sm font-medium">Enter your credentials to continue.</p>
                 </div>
 
@@ -59,7 +61,7 @@ export default function LoginPage() {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full px-5 py-4 rounded-xl bg-secondary border border-border focus:ring-2 focus:ring-blue-600 outline-none transition-all font-bold"
+                            className="w-full px-5 py-4 rounded-xl bg-secondary border border-border focus:ring-2 focus:ring-blue-600 outline-none transition-all font-bold dark:bg-white dark:text-black"
                             placeholder="your@email.com"
                             required
                         />
@@ -76,7 +78,7 @@ export default function LoginPage() {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full px-5 py-4 rounded-xl bg-secondary border border-border focus:ring-2 focus:ring-blue-600 outline-none transition-all font-bold"
+                            className="w-full px-5 py-4 rounded-xl bg-secondary border border-border focus:ring-2 focus:ring-blue-600 outline-none transition-all font-bold dark:bg-white dark:text-black"
                             placeholder="••••••••"
                             required
                         />
@@ -85,7 +87,7 @@ export default function LoginPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-foreground text-background py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:opacity-90 transition-all flex items-center justify-center gap-2 disabled:opacity-50 shadow-xl shadow-black/5"
+                        className="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-blue-700 transition-all flex items-center justify-center gap-2 disabled:opacity-50 shadow-xl shadow-blue-500/20"
                     >
                         {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Sign In"}
                     </button>
@@ -93,7 +95,7 @@ export default function LoginPage() {
 
                 <p className="text-center text-xs font-bold text-muted-foreground tracking-tight">
                     New here?{" "}
-                    <Link href="/register" className="text-foreground hover:underline uppercase underline-offset-4">
+                    <Link href="/register" className="text-blue-600 hover:underline uppercase underline-offset-4">
                         Create Account
                     </Link>
                 </p>

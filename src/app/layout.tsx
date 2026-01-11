@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "@/styles/globals.css";
 import AuthProvider from "@/components/providers/AuthProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "Next.js Only E-Commerce",
-    description: "A premium e-commerce application built with Next.js",
+    title: "The Gift Shop",
+    description: "Curated gifts for every occasion. Find the perfect present for your loved ones.",
 };
 
 import AdminGuard from "@/components/layout/AdminGuard";
@@ -21,7 +22,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={`${inter.className} bg-background text-foreground`}>
+            <body className={`${outfit.className} bg-background text-foreground`}>
                 <ThemeProvider>
                     <AuthProvider>
                         <Header />
@@ -30,6 +31,7 @@ export default function RootLayout({
                                 {children}
                             </AdminGuard>
                         </main>
+                        <Footer />
                     </AuthProvider>
                 </ThemeProvider>
             </body>

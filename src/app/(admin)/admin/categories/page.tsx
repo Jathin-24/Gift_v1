@@ -133,7 +133,7 @@ export default function AdminCategories() {
         <div className="space-y-12 animate-in fade-in duration-500">
             <div className="flex justify-between items-end">
                 <div>
-                    <h1 className="text-4xl font-black italic tracking-tighter uppercase underline decoration-blue-500 underline-offset-8">Category Management</h1>
+                    <h1 className="text-3xl md:text-4xl font-black italic tracking-tighter uppercase underline decoration-blue-500 underline-offset-8">Category Management</h1>
                     <p className="text-xs font-black text-muted-foreground uppercase tracking-widest mt-6">Configure Product Taxonomies</p>
                 </div>
                 <button

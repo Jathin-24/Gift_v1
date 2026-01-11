@@ -14,7 +14,7 @@ export default async function CategoriesPage() {
     return (
         <div className="container mx-auto px-4 py-12">
             <div className="mb-12">
-                <h1 className="text-4xl font-black tracking-tighter uppercase italic">Shop by Category</h1>
+                <h1 className="text-3xl md:text-4xl font-black tracking-tighter uppercase italic underline decoration-blue-600 underline-offset-8">Shop by Category</h1>
                 <p className="text-muted-foreground mt-2 font-medium">Explore our products organized by collection.</p>
             </div>
 
@@ -29,7 +29,7 @@ export default async function CategoriesPage() {
                             src={getValidImage(category.image)}
                             alt={category.title}
                             fill
-                            className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 dark:opacity-40"
+                            className="object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-8 flex flex-col justify-end text-white">
                             <h2 className="text-2xl font-black uppercase tracking-tight mb-2">{category.title}</h2>

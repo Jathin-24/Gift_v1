@@ -40,10 +40,12 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="min-h-[calc(100vh-80px)] flex flex-col items-center justify-center p-6 bg-background">
-            <div className="w-full max-w-[400px] space-y-8">
+        <div className="min-h-[calc(100vh-80px)] flex flex-col items-center justify-center p-6 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-50 via-background to-background dark:from-blue-950/20 dark:via-background dark:to-background">
+            <div className="w-full max-w-[450px] space-y-8 bg-card border-4 border-zinc-200 dark:border-zinc-700 p-10 rounded-[3rem] shadow-2xl shadow-blue-600/30 hover:shadow-blue-600/40 transition-shadow duration-500">
                 <div className="text-center space-y-2">
-                    <h1 className="text-3xl font-black tracking-tight uppercase">Register</h1>
+                    <h1 className="text-5xl font-black italic tracking-tighter uppercase text-foreground mb-4">
+                        Register<span className="text-blue-600">.</span>
+                    </h1>
                     <p className="text-muted-foreground text-sm font-medium">Create your credentials to join us.</p>
                 </div>
 
@@ -60,7 +62,7 @@ export default function RegisterPage() {
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full px-5 py-4 rounded-xl bg-secondary border border-border focus:ring-2 focus:ring-blue-600 outline-none transition-all font-bold"
+                            className="w-full px-5 py-4 rounded-xl bg-secondary border border-border focus:ring-2 focus:ring-blue-600 outline-none transition-all font-bold dark:bg-white dark:text-black"
                             placeholder="Your Name"
                             required
                         />
@@ -72,7 +74,7 @@ export default function RegisterPage() {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full px-5 py-4 rounded-xl bg-secondary border border-border focus:ring-2 focus:ring-blue-600 outline-none transition-all font-bold"
+                            className="w-full px-5 py-4 rounded-xl bg-secondary border border-border focus:ring-2 focus:ring-blue-600 outline-none transition-all font-bold dark:bg-white dark:text-black"
                             placeholder="your@email.com"
                             required
                         />
@@ -84,7 +86,7 @@ export default function RegisterPage() {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full px-5 py-4 rounded-xl bg-secondary border border-border focus:ring-2 focus:ring-blue-600 outline-none transition-all font-bold"
+                            className="w-full px-5 py-4 rounded-xl bg-secondary border border-border focus:ring-2 focus:ring-blue-600 outline-none transition-all font-bold dark:bg-white dark:text-black"
                             placeholder="••••••••"
                             required
                         />
@@ -93,7 +95,7 @@ export default function RegisterPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-foreground text-background py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:opacity-90 transition-all flex items-center justify-center gap-2 disabled:opacity-50 shadow-xl shadow-black/5 mt-4"
+                        className="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-blue-700 transition-all flex items-center justify-center gap-2 disabled:opacity-50 shadow-xl shadow-blue-500/20 mt-4"
                     >
                         {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Create Account"}
                     </button>
@@ -101,7 +103,7 @@ export default function RegisterPage() {
 
                 <p className="text-center text-xs font-bold text-muted-foreground tracking-tight">
                     Already have an account?{" "}
-                    <Link href="/login" className="text-foreground hover:underline uppercase underline-offset-4">
+                    <Link href="/login" className="text-blue-600 hover:underline uppercase underline-offset-4">
                         Sign In
                     </Link>
                 </p>

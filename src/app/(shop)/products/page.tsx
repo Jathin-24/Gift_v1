@@ -38,10 +38,10 @@ export default async function ProductsPage({
     const products = await Product.find(query).sort(sortOptions);
 
     return (
-        <div className="container mx-auto px-4 py-16">
-            <div className="flex flex-col mb-16 gap-8">
+        <div className="container mx-auto px-4 py-8 md:py-12">
+            <div className="flex flex-col mb-12 gap-6">
                 <div>
-                    <h1 className="text-5xl font-black uppercase tracking-tighter italic underline decoration-blue-600 underline-offset-8">
+                    <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tighter italic underline decoration-blue-600 underline-offset-8">
                         {categoryTitle}
                     </h1>
                     <p className="text-muted-foreground mt-4 font-bold uppercase text-[10px] tracking-[0.2em]">
@@ -52,14 +52,14 @@ export default async function ProductsPage({
                 <ProductFilters categories={categories.map(c => JSON.parse(JSON.stringify(c)))} />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
                 {products.map((product) => (
                     <Link
                         key={product._id}
                         href={`/products/${product.slug}`}
-                        className="group"
+                        className="group bg-card border-2 border-border rounded-2xl p-3 md:p-4 shadow-sm hover:shadow-2xl hover:shadow-blue-600/50 hover:border-blue-500/30 transition-all"
                     >
-                        <div className="relative aspect-square overflow-hidden rounded-[2.5rem] bg-secondary mb-6 border border-border group-hover:border-blue-600 transition-colors">
+                        <div className="relative aspect-square overflow-hidden rounded-xl bg-secondary mb-3 border border-border/50 group-hover:border-blue-600 transition-colors">
                             <Image
                                 src={getValidImage(product.images?.[0])}
                                 alt={product.title}
@@ -67,23 +67,23 @@ export default async function ProductsPage({
                                 className="object-cover transition-transform duration-500 group-hover:scale-110"
                             />
                             {product.featured && (
-                                <span className="absolute top-6 left-6 bg-background/90 dark:bg-black/90 backdrop-blur-md px-4 py-1.5 rounded-full text-[9px] font-black tracking-[0.2em] uppercase shadow-2xl border border-white/10">
+                                <span className="absolute top-2 left-2 bg-background/90 dark:bg-black/90 backdrop-blur-md px-2 py-0.5 rounded-full text-[8px] font-black tracking-wider uppercase shadow-lg border border-white/10">
                                     Featured
                                 </span>
                             )}
                         </div>
-                        <h3 className="text-xl font-black group-hover:text-blue-600 transition-colors uppercase tracking-tight mb-2">
+                        <h3 className="text-sm md:text-base font-black group-hover:text-blue-600 transition-colors uppercase tracking-tight mb-1 line-clamp-2">
                             {product.title}
                         </h3>
-                        <p className="text-muted-foreground text-xs line-clamp-1 mb-4 font-bold italic opacity-70">
+                        <p className="text-muted-foreground text-[10px] line-clamp-1 mb-2 font-medium italic opacity-70">
                             "{product.description}"
                         </p>
                         <div className="flex items-center justify-between">
-                            <p className="text-2xl font-black text-foreground italic tracking-tighter">
+                            <p className="text-lg md:text-xl font-black text-foreground italic tracking-tighter">
                                 {formatPrice(product.price)}
                             </p>
-                            <span className="text-[9px] font-black uppercase tracking-widest text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity">
-                                Full Specs →
+                            <span className="text-[8px] font-black uppercase tracking-widest text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity hidden md:inline">
+                                View →
                             </span>
                         </div>
                     </Link>

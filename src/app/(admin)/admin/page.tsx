@@ -37,7 +37,7 @@ export default async function AdminDashboard() {
     return (
         <div className="space-y-12">
             <div className="flex justify-between items-center">
-                <h1 className="text-4xl font-black italic tracking-tighter uppercase text-foreground underline decoration-blue-500 underline-offset-8">Dashboard Overview</h1>
+                <h1 className="text-3xl md:text-4xl font-black italic tracking-tighter uppercase text-foreground underline decoration-blue-500 underline-offset-8">Dashboard Overview</h1>
                 <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted-foreground bg-secondary px-4 py-2 rounded-full border border-border">
                     <Clock className="w-3.5 h-3.5" />
                     Real-time Data

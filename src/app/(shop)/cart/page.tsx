@@ -41,7 +41,7 @@ export default function CartPage() {
 
     return (
         <div className="container mx-auto px-4 py-12">
-            <h1 className="text-4xl font-black mb-12 tracking-tighter uppercase italic">My Shopping Bag</h1>
+            <h1 className="text-3xl md:text-4xl font-black mb-12 tracking-tighter uppercase italic underline decoration-blue-600 underline-offset-8">My Shopping Bag</h1>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                 {/* Cart Items */}
@@ -49,9 +49,9 @@ export default function CartPage() {
                     {items.map((item) => (
                         <div
                             key={item.id}
-                            className="flex gap-6 p-6 bg-card border border-border rounded-3xl group transition-all hover:shadow-md"
+                            className="flex gap-6 p-6 bg-card dark:bg-zinc-900 border border-border rounded-3xl group transition-all hover:shadow-md"
                         >
-                            <div className="relative w-32 h-32 flex-shrink-0 bg-secondary rounded-2xl overflow-hidden">
+                            <div className="relative w-32 h-32 flex-shrink-0 bg-secondary dark:bg-zinc-800 rounded-2xl overflow-hidden">
                                 <Image src={getValidImage(item.image)} alt={item.title} fill className="object-cover" />
                             </div>
 
@@ -70,17 +70,17 @@ export default function CartPage() {
                                 </div>
 
                                 <div className="flex justify-between items-end">
-                                    <div className="flex items-center gap-3 bg-secondary p-1 rounded-full border border-border">
+                                    <div className="flex items-center gap-3 bg-secondary dark:bg-zinc-800 p-1 rounded-full border border-border dark:border-zinc-700">
                                         <button
                                             onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
-                                            className="w-8 h-8 flex items-center justify-center bg-background hover:bg-secondary rounded-full transition-all shadow-sm"
+                                            className="w-8 h-8 flex items-center justify-center bg-background hover:bg-secondary dark:bg-black dark:text-white dark:hover:bg-zinc-700 rounded-full transition-all shadow-sm"
                                         >
                                             <Minus className="w-3 h-3" />
                                         </button>
                                         <span className="w-8 text-center font-black text-sm text-foreground">{item.quantity}</span>
                                         <button
                                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                            className="w-8 h-8 flex items-center justify-center bg-background hover:bg-secondary rounded-full transition-all shadow-sm"
+                                            className="w-8 h-8 flex items-center justify-center bg-background hover:bg-secondary dark:bg-black dark:text-white dark:hover:bg-zinc-700 rounded-full transition-all shadow-sm"
                                         >
                                             <Plus className="w-3 h-3" />
                                         </button>
@@ -94,8 +94,8 @@ export default function CartPage() {
 
                 {/* Order Summary */}
                 <div className="lg:col-span-1">
-                    <div className="bg-secondary border border-border rounded-3xl p-8 sticky top-24 transition-colors">
-                        <h2 className="text-2xl font-black mb-8 italic uppercase tracking-tighter">Order Summary</h2>
+                    <div className="bg-secondary dark:bg-zinc-900 border border-border rounded-3xl p-8 sticky top-24 transition-colors shadow-sm">
+                        <h2 className="text-2xl font-black mb-8 italic uppercase tracking-tighter text-foreground">Order Summary</h2>
 
                         <div className="space-y-4 mb-8">
                             <div className="flex justify-between text-muted-foreground font-medium">
@@ -117,7 +117,7 @@ export default function CartPage() {
 
                         <div className="pt-8 border-t border-border mb-8">
                             <div className="flex justify-between items-end">
-                                <span className="text-lg font-black uppercase tracking-tight">Total Amount</span>
+                                <span className="text-lg font-black uppercase tracking-tight text-foreground">Total Amount</span>
                                 <div className="text-right">
                                     <p className="text-[10px] text-muted-foreground underline uppercase tracking-widest decoration-blue-500 font-bold">Inclusive of taxes</p>
                                     <p className="text-3xl font-black tracking-tighter text-foreground">{formatPrice(total)}</p>
@@ -134,7 +134,7 @@ export default function CartPage() {
                         </Link>
 
                         <div className="mt-8 flex flex-wrap items-center justify-center gap-4 grayscale opacity-50 dark:invert">
-                            <span className="text-[10px] font-black uppercase tracking-widest">Verified Payments</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-foreground">Verified Payments</span>
                         </div>
                     </div>
                 </div>

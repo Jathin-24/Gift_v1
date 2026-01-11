@@ -37,7 +37,7 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
             onClick={handleAdd}
             className={`w-full py-5 rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all duration-300 shadow-xl ${added
                 ? "bg-green-600 text-white scale-[0.98] shadow-green-600/20"
-                : "bg-foreground text-background hover:opacity-90 shadow-black/5"
+                : "bg-foreground text-background dark:bg-white dark:text-black hover:opacity-90 shadow-black/5"
                 }`}
         >
             {added ? (

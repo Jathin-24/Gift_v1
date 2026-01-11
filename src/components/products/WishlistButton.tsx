@@ -57,12 +57,12 @@ export default function WishlistButton({ productId }: { productId: string }) {
             onClick={toggleWishlist}
             disabled={loading}
             className={`w-full py-4 border-2 rounded-2xl flex items-center justify-center gap-3 font-black uppercase tracking-[0.2em] text-[10px] transition-all ${isWishlisted
-                    ? "bg-red-50 text-red-600 border-red-200"
-                    : "bg-secondary text-foreground border-border hover:bg-red-50 hover:text-red-500 hover:border-red-200"
+                ? "bg-red-50 text-red-600 border-red-200"
+                : "bg-secondary text-foreground dark:bg-white dark:text-black border-border hover:bg-red-50 hover:text-red-500 hover:border-red-200"
                 }`}
         >
             <Heart className={`w-4 h-4 ${isWishlisted ? "fill-current" : ""}`} />
-            {isWishlisted ? "In Matrix" : "Add to Wishlist"}
+            {isWishlisted ? "Saved to Wishlist" : "Add to Wishlist"}
         </button>
     );
 }

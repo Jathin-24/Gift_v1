@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { ShoppingCart, User, LogOut, Menu, X, LayoutDashboard, ShieldCheck } from "lucide-react";
+import { ShoppingCart, User, LogOut, Menu, X, LayoutDashboard, ShieldCheck, Package, Tags, LogIn } from "lucide-react";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { useCartStore } from "@/store/cartStore";
 import { useAdminStore } from "@/store/useAdminStore";
 import ThemeToggle from "./ThemeToggle";
@@ -14,15 +15,15 @@ export default function Header() {
     const { isAdminMode, toggleAdminMode } = useAdminStore();
     const items = useCartStore((state) => state.items);
     const itemCount = items.reduce((total, item) => total + item.quantity, 0);
+    const pathname = usePathname();
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-xl">
             <div className="container mx-auto px-4 h-20 flex items-center justify-between">
                 <div className="flex items-center gap-12">
                     <Link href="/" className="text-2xl font-black italic tracking-tighter uppercase group">
-                        Store<span className="text-blue-600 group-hover:animate-pulse">.</span>
+                        Gifts<span className="text-blue-600 group-hover:animate-pulse">.</span>
                     </Link>
-
                 </div>
 
                 <div className="flex items-center gap-3 md:gap-6">
@@ -31,9 +32,9 @@ export default function Header() {
                     {session?.user.role === "admin" && (
                         <button
                             onClick={toggleAdminMode}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all border-2 group ${isAdminMode
-                                    ? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/30'
-                                    : 'bg-blue-50 text-blue-600 border-blue-200 hover:border-blue-400 hover:bg-blue-100'
+                            className={`flex items-center gap-2 px-3 py-2 rounded-full transition-all border-2 group ${isAdminMode
+                                ? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/30'
+                                : 'bg-blue-50 text-blue-600 border-blue-200 hover:border-blue-400 hover:bg-blue-100'
                                 }`}
                             title={isAdminMode ? "Exit Admin Focus" : "Enter Admin Focus"}
                         >
@@ -44,56 +45,60 @@ export default function Header() {
                         </button>
                     )}
 
-                    {!isAdminMode && (
-                        <nav className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
-                            <Link href="/products" className="text-[11px] font-black uppercase tracking-widest hover:text-blue-600 transition-colors">
-                                Products
-                            </Link>
-                            <Link href="/categories" className="text-[11px] font-black uppercase tracking-widest hover:text-blue-600 transition-colors">
-                                Collections
-                            </Link>
-                        </nav>
-                    )}
+                    {/* Desktop Navigation Items - Hidden on Mobile */}
+                    <div className="hidden md:flex items-center gap-3 md:gap-6">
 
-                    {(!isAdminMode && session) && (
-                        <Link href="/cart" className="relative p-3 hover:bg-secondary rounded-2xl transition-all border border-transparent hover:border-border group">
-                            <ShoppingCart className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                            {itemCount > 0 && (
-                                <span className="absolute top-1 right-1 bg-blue-600 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/40">
-                                    {itemCount}
-                                </span>
-                            )}
-                        </Link>
-                    )}
+                        {!isAdminMode && (
+                            <nav className="flex items-center gap-8">
+                                <Link href="/products" className="text-[11px] font-black uppercase tracking-widest hover:text-blue-600 transition-colors">
+                                    Products
+                                </Link>
+                                <Link href="/categories" className="text-[11px] font-black uppercase tracking-widest hover:text-blue-600 transition-colors">
+                                    Collections
+                                </Link>
+                            </nav>
+                        )}
 
-                    {session ? (
-                        <div className="flex items-center gap-2 md:gap-4">
-                            {session.user.role === "admin" && (
-                                <Link href="/admin" className="p-3 text-blue-600 hover:bg-secondary rounded-2xl transition-all border border-transparent hover:border-border group" title="Admin Panel">
-                                    <LayoutDashboard className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                                </Link>
-                            )}
-                            {!isAdminMode && (
-                                <Link href="/profile" className="p-3 hover:bg-secondary rounded-2xl transition-all border border-transparent hover:border-border group" title="My Profile">
-                                    <User className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                                </Link>
-                            )}
-                            <button
-                                onClick={() => signOut()}
-                                className="hidden md:block p-3 hover:bg-red-500 hover:text-white rounded-2xl transition-all border border-transparent hover:border-red-500/20 group"
-                                title="Sign Out"
+                        {(!isAdminMode && session) && (
+                            <Link href="/cart" className="relative p-3 text-muted-foreground hover:text-black hover:bg-secondary rounded-2xl transition-all border border-transparent hover:border-border group">
+                                <ShoppingCart className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                                {itemCount > 0 && (
+                                    <span className="absolute top-1 right-1 bg-blue-600 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/40">
+                                        {itemCount}
+                                    </span>
+                                )}
+                            </Link>
+                        )}
+
+                        {session ? (
+                            <div className="flex items-center gap-2 md:gap-4">
+                                {session.user.role === "admin" && (
+                                    <Link href="/admin" className="p-3 text-blue-600 hover:bg-secondary rounded-2xl transition-all border border-transparent hover:border-border group" title="Admin Panel">
+                                        <LayoutDashboard className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                                    </Link>
+                                )}
+                                {!isAdminMode && (
+                                    <Link href="/profile" className="p-3 text-muted-foreground hover:text-black hover:bg-secondary rounded-2xl transition-all border border-transparent hover:border-border group" title="My Profile">
+                                        <User className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                                    </Link>
+                                )}
+                                <button
+                                    onClick={() => signOut()}
+                                    className="p-3 text-muted-foreground hover:bg-red-500 hover:text-white rounded-2xl transition-all border border-transparent hover:border-red-500/20 group"
+                                    title="Sign Out"
+                                >
+                                    <LogOut className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+                                </button>
+                            </div>
+                        ) : (
+                            <Link
+                                href="/login"
+                                className="px-8 py-3 bg-foreground text-background text-[11px] font-black uppercase tracking-widest rounded-2xl hover:opacity-90 transition-all shadow-xl shadow-black/5"
                             >
-                                <LogOut className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                            </button>
-                        </div>
-                    ) : (
-                        <Link
-                            href="/login"
-                            className="px-8 py-3 bg-foreground text-background text-[11px] font-black uppercase tracking-widest rounded-2xl hover:opacity-90 transition-all shadow-xl shadow-black/5"
-                        >
-                            Log In
-                        </Link>
-                    )}
+                                Log In
+                            </Link>
+                        )}
+                    </div>
 
                     <button
                         className="md:hidden p-3 hover:bg-secondary rounded-2xl transition-all"
@@ -106,24 +111,115 @@ export default function Header() {
 
             {/* Mobile Menu */}
             {isMenuOpen && (
-                <div className="md:hidden absolute top-20 left-0 w-full bg-background border-b border-border p-8 flex flex-col gap-6 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-300 backdrop-blur-3xl bg-background/95">
-                    <Link href="/products" className="text-xs font-black uppercase tracking-[0.2em] py-4 border-b border-border/50" onClick={() => setIsMenuOpen(false)}>Products</Link>
-                    <Link href="/categories" className="text-xs font-black uppercase tracking-[0.2em] py-4 border-b border-border/50" onClick={() => setIsMenuOpen(false)}>Collections</Link>
+                <div className="md:hidden absolute top-20 left-0 w-full h-[calc(100vh-5rem)] bg-background backdrop-blur-3xl border-b border-border p-6 flex flex-col gap-2 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-300 overflow-y-auto">
+
+                    {session?.user.role === "admin" && (
+                        <button
+                            onClick={() => { toggleAdminMode(); setIsMenuOpen(false); }}
+                            className={`w-full flex items-center justify-between px-5 py-3.5 rounded-2xl border-2 ${isAdminMode
+                                ? 'bg-blue-600 text-white border-blue-600'
+                                : 'bg-secondary text-blue-600 border-blue-200'
+                                }`}
+                        >
+                            <span className="text-xs font-black uppercase tracking-widest">
+                                {isAdminMode ? 'Admin Mode Active' : 'Enable Admin Mode'}
+                            </span>
+                            <ShieldCheck className="w-4 h-4" />
+                        </button>
+                    )}
+
+                    {!isAdminMode && (
+                        <>
+                            <Link
+                                href="/products"
+                                className={`flex items-center gap-3 px-5 py-3.5 rounded-2xl font-black uppercase tracking-tighter text-xs transition-all ${pathname === '/products'
+                                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
+                                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+                                    }`}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <Package className="w-4 h-4" />
+                                Products
+                            </Link>
+                            <Link
+                                href="/categories"
+                                className={`flex items-center gap-3 px-5 py-3.5 rounded-2xl font-black uppercase tracking-tighter text-xs transition-all ${pathname === '/categories'
+                                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
+                                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+                                    }`}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <Tags className="w-4 h-4" />
+                                Collections
+                            </Link>
+                        </>
+                    )}
+
                     {session ? (
                         <>
-                            {session.user.role === "admin" && (
-                                <Link href="/admin" className="text-xs font-black uppercase tracking-[0.2em] py-4 border-b border-border/50 text-blue-600" onClick={() => setIsMenuOpen(false)}>Admin Panel</Link>
+                            {!isAdminMode && (
+                                <Link
+                                    href="/cart"
+                                    className={`flex items-center gap-3 px-5 py-3.5 rounded-2xl font-black uppercase tracking-tighter text-xs transition-all justify-between ${pathname === '/cart'
+                                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
+                                        : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+                                        }`}
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <ShoppingCart className="w-4 h-4" />
+                                        Cart
+                                    </div>
+                                    {itemCount > 0 && (
+                                        <span className={`text-[9px] px-2 py-0.5 rounded-full font-bold ${pathname === '/cart' ? 'bg-white text-blue-600' : 'bg-blue-600 text-white'
+                                            }`}>{itemCount}</span>
+                                    )}
+                                </Link>
                             )}
-                            <Link href="/profile" className="text-xs font-black uppercase tracking-[0.2em] py-4 border-b border-border/50" onClick={() => setIsMenuOpen(false)}>My Profile</Link>
-                            <button
-                                onClick={() => signOut()}
-                                className="text-xs font-black uppercase tracking-[0.2em] py-4 text-red-600 text-left"
-                            >
-                                Sign Out
-                            </button>
+
+                            {session.user.role === "admin" && (
+                                <Link
+                                    href="/admin"
+                                    className={`flex items-center gap-3 px-5 py-3.5 rounded-2xl font-black uppercase tracking-tighter text-xs transition-all ${pathname?.startsWith('/admin')
+                                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
+                                        : 'text-blue-600 bg-blue-50/50 hover:bg-blue-100'
+                                        }`}
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    <LayoutDashboard className="w-4 h-4" />
+                                    Admin Dashboard
+                                </Link>
+                            )}
+
+                            {!isAdminMode && (
+                                <Link
+                                    href="/profile"
+                                    className={`flex items-center gap-3 px-5 py-3.5 rounded-2xl font-black uppercase tracking-tighter text-xs transition-all ${pathname === '/profile'
+                                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
+                                        : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+                                        }`}
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    <User className="w-4 h-4" />
+                                    My Profile
+                                </Link>
+                            )}
+
+                            <div className="mt-auto border-t border-border pt-4">
+                                <button
+                                    onClick={() => signOut()}
+                                    className="w-full flex items-center gap-3 px-5 py-3.5 text-red-500 hover:bg-red-50 rounded-2xl font-black uppercase tracking-tighter text-xs transition-all"
+                                >
+                                    <LogOut className="w-4 h-4" />
+                                    Sign Out
+                                </button>
+                            </div>
                         </>
                     ) : (
-                        <Link href="/login" className="text-xs font-black uppercase tracking-[0.2em] py-4 border-b border-border/50" onClick={() => setIsMenuOpen(false)}>Sign In</Link>
+                        <Link href="/login" className="flex items-center gap-3 px-5 py-3.5 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-2xl font-black uppercase tracking-tighter text-xs transition-all" onClick={() => setIsMenuOpen(false)}>
+                            <LogIn className="w-4 h-4" />
+                            Sign In
+                        </Link>
                     )}
                 </div>
             )}

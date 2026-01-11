@@ -68,22 +68,22 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
                         <WishlistButton productId={product._id.toString()} />
 
                         <div className="pt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div className="p-5 bg-secondary border border-border rounded-3xl flex items-center gap-4 group hover:border-blue-500/50 transition-all">
-                                <div className="w-12 h-12 bg-background rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                            <div className="p-5 bg-secondary border border-border rounded-3xl flex items-center gap-4 group hover:border-blue-500/50 transition-all dark:bg-white">
+                                <div className="w-12 h-12 bg-background rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform dark:bg-zinc-100">
                                     🚚
                                 </div>
                                 <div>
-                                    <p className="text-sm font-black uppercase tracking-tight">Free Shipping</p>
-                                    <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Orders over ₹500</p>
+                                    <p className="text-sm font-black uppercase tracking-tight dark:text-black">Free Shipping</p>
+                                    <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest dark:text-gray-500">Orders over ₹500</p>
                                 </div>
                             </div>
-                            <div className="p-5 bg-secondary border border-border rounded-3xl flex items-center gap-4 group hover:border-blue-500/50 transition-all">
-                                <div className="w-12 h-12 bg-background rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform text-lg">
+                            <div className="p-5 bg-secondary border border-border rounded-3xl flex items-center gap-4 group hover:border-blue-500/50 transition-all dark:bg-white">
+                                <div className="w-12 h-12 bg-background rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform text-lg dark:bg-zinc-100">
                                     🔒
                                 </div>
                                 <div>
-                                    <p className="text-sm font-black uppercase tracking-tight">Secure Payment</p>
-                                    <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Verified in India</p>
+                                    <p className="text-sm font-black uppercase tracking-tight dark:text-black">Secure Payment</p>
+                                    <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest dark:text-gray-500">Verified in India</p>
                                 </div>
                             </div>
                         </div>

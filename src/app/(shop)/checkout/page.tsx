@@ -202,7 +202,7 @@ export default function CheckoutPage() {
             <div className="flex flex-col lg:flex-row gap-12">
                 {/* Checkout Form */}
                 <div className="lg:w-2/3">
-                    <div className="bg-card border-2 border-border rounded-[2.5rem] p-10 shadow-2xl shadow-black/5">
+                    <div className="bg-card border-2 border-border rounded-[2.5rem] p-10 shadow-2xl shadow-blue-600/20 dark:bg-zinc-900">
                         <div className="flex items-center gap-4 mb-10">
                             <div className="w-12 h-12 bg-blue-600/10 text-blue-600 rounded-2xl flex items-center justify-center">
                                 <Truck className="w-6 h-6" />
@@ -218,7 +218,7 @@ export default function CheckoutPage() {
                                         name="name"
                                         value={formData.name}
                                         onChange={handleInputChange}
-                                        className="w-full px-6 py-4 rounded-2xl bg-secondary border border-border focus:border-blue-600 outline-none font-bold transition-all"
+                                        className="w-full px-6 py-4 rounded-2xl bg-secondary border border-border focus:border-blue-600 outline-none font-bold transition-all dark:bg-white dark:text-black"
                                         placeholder="Receiver's Name"
                                         required
                                     />
@@ -233,7 +233,7 @@ export default function CheckoutPage() {
                                             name="phone"
                                             value={formData.phone}
                                             onChange={handleInputChange}
-                                            className="w-full pl-20 pr-6 py-4 rounded-2xl bg-secondary border border-border focus:border-blue-600 outline-none font-bold transition-all"
+                                            className="w-full pl-20 pr-6 py-4 rounded-2xl bg-secondary border border-border focus:border-blue-600 outline-none font-bold transition-all dark:bg-white dark:text-black"
                                             placeholder="10-digit number"
                                             required
                                         />
@@ -247,7 +247,7 @@ export default function CheckoutPage() {
                                     name="address.line1"
                                     value={formData.address.line1}
                                     onChange={handleInputChange}
-                                    className="w-full px-6 py-4 rounded-2xl bg-secondary border border-border focus:border-blue-600 outline-none font-bold transition-all"
+                                    className="w-full px-6 py-4 rounded-2xl bg-secondary border border-border focus:border-blue-600 outline-none font-bold transition-all dark:bg-white dark:text-black"
                                     placeholder="House No., Street, Area"
                                     required
                                 />
@@ -260,7 +260,7 @@ export default function CheckoutPage() {
                                         name="address.city"
                                         value={formData.address.city}
                                         onChange={handleInputChange}
-                                        className="w-full px-6 py-4 rounded-2xl bg-secondary border border-border focus:border-blue-600 outline-none font-bold transition-all"
+                                        className="w-full px-6 py-4 rounded-2xl bg-secondary border border-border focus:border-blue-600 outline-none font-bold transition-all dark:bg-white dark:text-black"
                                         placeholder="City"
                                         required
                                     />
@@ -271,7 +271,7 @@ export default function CheckoutPage() {
                                         name="address.state"
                                         value={formData.address.state}
                                         onChange={handleInputChange}
-                                        className="w-full px-6 py-4 rounded-2xl bg-secondary border border-border focus:border-blue-600 outline-none font-bold transition-all"
+                                        className="w-full px-6 py-4 rounded-2xl bg-secondary border border-border focus:border-blue-600 outline-none font-bold transition-all dark:bg-white dark:text-black"
                                         placeholder="State"
                                         required
                                     />
@@ -282,7 +282,7 @@ export default function CheckoutPage() {
                                         name="address.postalCode"
                                         value={formData.address.postalCode}
                                         onChange={handleInputChange}
-                                        className="w-full px-6 py-4 rounded-2xl bg-secondary border border-border focus:border-blue-600 outline-none font-bold transition-all"
+                                        className="w-full px-6 py-4 rounded-2xl bg-secondary border border-border focus:border-blue-600 outline-none font-bold transition-all dark:bg-white dark:text-black"
                                         placeholder="6 digits"
                                         required
                                     />
@@ -365,7 +365,7 @@ export default function CheckoutPage() {
 
                 {/* Summary Cart */}
                 <div className="lg:w-1/3">
-                    <div className="bg-secondary border border-border rounded-[2.5rem] p-10 sticky top-24">
+                    <div className="bg-secondary border border-border rounded-[2.5rem] p-10 sticky top-24 dark:bg-zinc-900 shadow-2xl shadow-blue-600/20">
                         <h2 className="text-2xl font-black italic uppercase mb-8 border-b-2 border-border pb-4">Order Summary</h2>
                         <div className="space-y-6 mb-10 max-h-[40vh] overflow-auto pr-2 custom-scrollbar">
                             {items.map((item) => (
@@ -398,7 +398,7 @@ export default function CheckoutPage() {
                         </div>
 
                         <div className="mt-12 space-y-4">
-                            <div className="flex items-center gap-4 p-4 bg-card rounded-2xl border border-border group hover:border-blue-500 transition-colors">
+                            <div className="flex items-center gap-4 p-4 bg-card rounded-2xl border border-border group hover:border-blue-500 transition-colors dark:bg-zinc-800">
                                 <ShieldCheck className="w-6 h-6 text-green-500" />
                                 <div className="text-[10px] font-black uppercase tracking-widest leading-relaxed">
                                     India Shipping <br /> Available
