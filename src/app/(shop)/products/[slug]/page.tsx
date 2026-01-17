@@ -4,30 +4,49 @@ import dbConnect from "@/lib/db/mongodb";
 import Product from "@/lib/db/models/Product";
 import AddToCartButton from "@/components/products/AddToCartButton";
 import WishlistButton from "@/components/products/WishlistButton";
-import { getValidImage, formatPrice } from "@/lib/utils";
+import { getValidImage, formatPrice, cn } from "@/lib/utils";
+
+import FramePreview from "@/components/products/FramePreview";
+
+import Category from "@/lib/db/models/Category";
+
+// Ensure Category model is registered
+const _ = Category;
 
 export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
     await dbConnect();
-    const product = await Product.findOne({ slug: params.slug });
+    const product = await Product.findOne({ slug: params.slug }).populate("category");
 
     if (!product) {
         notFound();
     }
+
+    const isCustomizable = ["Frames", "Mugs", "Collages"].includes((product.category as any)?.title);
 
     return (
         <div className="container mx-auto px-4 py-12">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 {/* Image Gallery */}
                 <div className="space-y-4">
-                    <div className="relative aspect-square overflow-hidden rounded-3xl bg-secondary transition-colors">
-                        <Image
-                            src={getValidImage(product.images?.[0])}
-                            alt={product.title}
-                            fill
-                            className="object-cover"
-                            priority
+                    {isCustomizable ? (
+                        <FramePreview
+                            productImage={getValidImage(product.images?.[0])}
+                            productTitle={product.title}
+                            category={product.category?.title}
+                            config={product.customizationConfig}
+                            price={product.price}
                         />
-                    </div>
+                    ) : (
+                        <div className="relative aspect-square overflow-hidden rounded-3xl bg-secondary transition-colors">
+                            <Image
+                                src={getValidImage(product.images?.[0])}
+                                alt={product.title}
+                                fill
+                                className="object-cover"
+                                priority
+                            />
+                        </div>
+                    )}
                     <div className="grid grid-cols-4 gap-4">
                         {product.images.map((img: string, i: number) => (
                             <div key={i} className="relative aspect-square rounded-2xl overflow-hidden bg-secondary cursor-pointer hover:opacity-80 transition-all border border-transparent hover:border-blue-500">

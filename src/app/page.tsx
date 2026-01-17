@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 export default async function Home() {
   await dbConnect();
   const latestProducts = await Product.find({}).sort({ createdAt: -1 }).limit(4);
-  const featuredCategories = await Category.find({}).limit(3);
+  const featuredCategories = await Category.find({}).limit(6);
 
   return (
     <div className="flex flex-col">

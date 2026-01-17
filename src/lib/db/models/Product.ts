@@ -20,6 +20,7 @@ export interface IProduct extends Document {
         title?: string;
         description?: string;
     };
+    customizationConfig?: any;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -45,6 +46,7 @@ const ProductSchema: Schema = new Schema(
             title: { type: String },
             description: { type: String },
         },
+        customizationConfig: { type: Schema.Types.Mixed }, // Stores frame/mug specific data like printableArea, frameColor, etc.
     },
     { timestamps: true }
 );
