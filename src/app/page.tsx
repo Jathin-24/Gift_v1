@@ -19,7 +19,7 @@ export default async function Home() {
       <section className="relative h-[85vh] flex items-center justify-center overflow-hidden bg-black text-white">
         <div className="absolute inset-0 opacity-60">
           <img
-            src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1600"
+            src="https://images.pexels.com/photos/6204562/pexels-photo-6204562.jpeg?auto=compress&cs=tinysrgb&w=1600"
             alt="Hero Background"
             className="w-full h-full object-cover scale-105"
           />

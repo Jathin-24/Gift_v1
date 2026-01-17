@@ -360,8 +360,16 @@ export default function FramePreview({ productImage, productTitle, category, pri
 
     return (
         <div className="space-y-6">
-            <div className="bg-secondary/20 rounded-3xl p-6 border border-border/50">
-                <div className="flex flex-col items-center">
+            <div className="bg-secondary/20 rounded-3xl p-6 border border-border/50 flex flex-col items-center justify-center min-h-[500px]">
+                {uploadedImages.length === 0 ? (
+                    <div className="relative w-full max-w-[400px] aspect-[4/5] rounded-lg overflow-hidden shadow-sm bg-white">
+                        <img
+                            src={productImage}
+                            alt={productTitle}
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                ) : (
                     <canvas
                         ref={canvasRef}
                         width={CANVAS_WIDTH}
@@ -372,7 +380,7 @@ export default function FramePreview({ productImage, productTitle, category, pri
                         onMouseUp={handleCanvasMouseUp}
                         onMouseLeave={handleCanvasMouseUp}
                     />
-                </div>
+                )}
             </div>
 
             {/* Controls */}

@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
-export const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1560393464-5c69a73c5770?w=800&q=80";
+export const FALLBACK_IMAGE = "https://images.pexels.com/photos/6204562/pexels-photo-6204562.jpeg?auto=compress&cs=tinysrgb&w=800";
 
 export const isValidUrl = (url: string) => {
     try {
